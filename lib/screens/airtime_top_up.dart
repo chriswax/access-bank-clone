@@ -19,6 +19,8 @@ class _Page1State extends State<Page1> {
   int buttonAirtimeData = 1;
   String networkButton = 'Airtel';
   double selectedAmount = 0;
+  var _chosenValue = '-1';
+  //String selectedValue = '';
 
   printMe() {
     //test function
@@ -50,76 +52,114 @@ class _Page1State extends State<Page1> {
         // child: Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
+          const Card(
             elevation: 50,
             shadowColor: Colors.black,
-            color: const Color.fromARGB(255, 36, 35, 35),
-            child: SizedBox(
-              //width: 900,
-              //height: 120,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      ' 0048701922',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Text(
-                      '  PREMIER SAVINGS',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    RichText(
-                      text: const TextSpan(
-                        text: '  Alt. Number:  ',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '1175199089      ',
+            color: Color.fromARGB(255, 36, 35, 35),
+
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "0048701922",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontFamily: "Trajan Pro",
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Icon(
+                              Icons.remove_red_eye_rounded,
+                              color: Colors.green,
+                              shadows: <Shadow>[
+                                Shadow(color: Colors.white, blurRadius: 40.0)
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'PREMIER SAVINGS',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                            ),
                           ),
-                          TextSpan(
-                            text: '        Account Status: ',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal),
-                          ),
-                          TextSpan(
-                            text: 'Regular',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                  SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Alt. Number:",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  "Alt. Number:",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Account Status:",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  "Regular",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
             ),
+
+            //),
           ),
           const SizedBox(
             height: 14,
@@ -135,13 +175,6 @@ class _Page1State extends State<Page1> {
             ),
           ),
 
-          // const Padding(
-          //   padding: EdgeInsets.all(8.0),
-          //   child: LinearProgressIndicator(
-          //     backgroundColor: Colors.grey,
-          //     //valueColor: AlwaysStoppedAnimation(Colors.grey),
-          //   ),
-          // ),
           const Padding(
             padding: EdgeInsets.only(left: 8.0, right: 8.0),
             child: Divider(
@@ -163,7 +196,41 @@ class _Page1State extends State<Page1> {
           const SizedBox(
             height: 14,
           ),
-
+          //switch buttons
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomizedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonAirtimeData = 1;
+                      });
+                    },
+                    buttonText: 'Airtime',
+                    buttonColor: buttonAirtimeData == 1
+                        ? Colors.green
+                        : const Color.fromARGB(255, 36, 35, 35),
+                    textColor: Colors.white,
+                  ),
+                ),
+                Expanded(
+                  child: CustomizedButton(
+                    onPressed: () {
+                      setState(() {
+                        buttonAirtimeData = 2;
+                      });
+                    },
+                    buttonText: 'Data Bundles',
+                    buttonColor: buttonAirtimeData == 2
+                        ? Colors.green
+                        : const Color.fromARGB(255, 36, 35, 35),
+                    textColor: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.only(left: 8, right: 8, bottom: 2),
             child: Text(
@@ -293,56 +360,49 @@ class _Page1State extends State<Page1> {
             )),
           ),
 
-          //switch buttons
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomizedButton(
-                    onPressed: () {
-                      setState(() {
-                        buttonAirtimeData = 1;
-                      });
-                    },
-                    buttonText: 'Airtime',
-                    buttonColor: buttonAirtimeData == 1
-                        ? Colors.green
-                        : const Color.fromARGB(255, 36, 35, 35),
-                    textColor: Colors.white,
-                  ),
-                ),
-                Expanded(
-                  child: CustomizedButton(
-                    onPressed: () {
-                      setState(() {
-                        buttonAirtimeData = 2;
-                      });
-                    },
-                    buttonText: 'Data Bundles',
-                    buttonColor: buttonAirtimeData == 2
-                        ? Colors.green
-                        : const Color.fromARGB(255, 36, 35, 35),
-                    textColor: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
           const SizedBox(
             height: 10,
           ),
           if (buttonAirtimeData == 2)
-            TextInput(
-              textEditingController: productController,
-              hintText: 'No Product available',
-              textInputType: TextInputType.text,
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: DropdownButtonFormField(
+                  value: _chosenValue,
+                  dropdownColor: Colors.white,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                      ),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: "-1",
+                      child: Text(
+                        "No Product available1",
+                        style: TextStyle(fontFamily: "FontMain", fontSize: 24),
+                      ),
+                    ),
+                    // DropdownMenuItem(
+                    //   value: "2",
+                    //   child: Text("Select Available Products"),
+                    // ),
+                  ],
+                  onChanged: (v) {}),
             ),
+
           if (buttonAirtimeData == 1)
             const Padding(
               padding: EdgeInsets.only(left: 8, right: 8.0, top: 8),
               child: Text(
                 "Select Amount",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontFamily: "Trajan Pro"),
               ),
             ),
           if (buttonAirtimeData == 1)
@@ -376,6 +436,7 @@ class _Page1State extends State<Page1> {
                 ],
               ),
             ),
+
           if (buttonAirtimeData == 1)
             Expanded(
               child: Row(

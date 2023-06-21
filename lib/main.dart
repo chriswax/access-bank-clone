@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'helpers/flutterfont.dart';
 import 'screens/airtime_top_up.dart';
 
 void main() {
@@ -35,7 +36,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int pageIndex = 0;
+  int _selectedTab = 0;
   final pages = [
     const Page1(),
     const Page2(),
@@ -43,6 +44,13 @@ class _HomePageState extends State<HomePage> {
     const Page4(),
     const Page5(),
   ];
+
+  _changeTab(int index) {
+    setState(() {
+      _selectedTab = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,172 +71,50 @@ class _HomePageState extends State<HomePage> {
       //   centerTitle: true,
       //   backgroundColor: Colors.white,
       // ),
-      body: pages[pageIndex],
-      bottomNavigationBar: buildMyNavBar(context),
+      body: pages[_selectedTab],
+
+      bottomNavigationBar: Theme(
+        data: ThemeData(
+          canvasColor: Colors.black,
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _selectedTab,
+          onTap: (index) => _changeTab(index),
+          selectedItemColor: Colors.green,
+          unselectedItemColor: Colors.white,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          iconSize: 35,
+          selectedFontSize: 16,
+          unselectedFontSize: 14,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_balance_rounded),
+                activeIcon: Icon(Icons.account_balance_outlined),
+                label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(FlutterFontIcons.flutterLogoAccess),
+                activeIcon: Icon(FlutterFontIcons.flutterLogoAccess),
+                label: "MyAccess"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.qr_code_rounded),
+                activeIcon: Icon(Icons.qr_code_2_outlined),
+                label: "Scan"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.support_agent_rounded),
+                activeIcon: Icon(Icons.support_agent_outlined),
+                label: "Support"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_rounded),
+                activeIcon: Icon(Icons.person_outline_outlined),
+                label: "Profile"),
+          ],
+        ),
+      ),
     );
   }
 
 //end of widget
-
-  Container buildMyNavBar(BuildContext context) {
-    return Container(
-      height: 70,
-      color: Colors.black87,
-      //decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Column(
-            children: [
-              IconButton(
-                enableFeedback: true,
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  setState(() {
-                    pageIndex = 0;
-                  });
-                },
-                icon: pageIndex == 0
-                    ? const Icon(
-                        Icons.account_balance_rounded,
-                        color: Colors.green,
-                        size: 35,
-                      )
-                    : const Icon(
-                        Icons.account_balance_outlined,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-              ),
-              const Text(
-                "Home",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                enableFeedback: true,
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  setState(() {
-                    pageIndex = 1;
-                  });
-                },
-                icon: pageIndex == 1
-                    ? const Icon(
-                        Icons.diamond_rounded,
-                        color: Colors.green,
-                        size: 35,
-                      )
-                    : const Icon(
-                        Icons.diamond_outlined,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-              ),
-              const Text(
-                "MyAccess",
-                style: TextStyle(color: Colors.white),
-                // textAlign: ,
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                enableFeedback: true,
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  setState(() {
-                    pageIndex = 2;
-                  });
-                },
-                icon: pageIndex == 2
-                    ? const Icon(
-                        Icons.qr_code_rounded,
-                        color: Colors.green,
-                        size: 35,
-                      )
-                    : const Icon(
-                        Icons.qr_code_outlined,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-              ),
-              const Text(
-                "Scan",
-                style: TextStyle(color: Colors.white),
-                // textAlign: ,
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                enableFeedback: true,
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  setState(() {
-                    pageIndex = 3;
-                  });
-                },
-                icon: pageIndex == 3
-                    ? const Icon(
-                        Icons.support_agent_rounded,
-                        color: Colors.green,
-                        size: 35,
-                      )
-                    : const Icon(
-                        Icons.support_agent_outlined,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-              ),
-              const Text(
-                "Support",
-                style: TextStyle(color: Colors.white),
-                // textAlign: ,
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                enableFeedback: false,
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  setState(() {
-                    pageIndex = 4;
-                  });
-                },
-                icon: pageIndex == 4
-                    ? const Icon(
-                        Icons.person_rounded,
-                        color: Colors.green,
-                        size: 35,
-                      )
-                    : const Icon(
-                        Icons.person_outline_outlined,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-              ),
-              const Text(
-                "Profile",
-                style: TextStyle(color: Colors.white),
-                // textAlign: ,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-  //end of bottomNavigation
 }
 
 class Page2 extends StatelessWidget {
